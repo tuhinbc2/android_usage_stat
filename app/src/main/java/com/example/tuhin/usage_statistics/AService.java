@@ -1,11 +1,14 @@
 package com.example.tuhin.usage_statistics;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
@@ -114,5 +117,22 @@ public class AService extends Service {
         Log.w(TAG, "onDestroy callback called");
         unregisterReceiver(receiver);
         started = false;
+
+
+        Intent restartService = new Intent(getApplicationContext(),this.getClass());
+        PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(),1,restartService,PendingIntent.FLAG_ONE_SHOT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME,5000,pendingIntent);
+        super.onDestroy();
+
+        /*final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.d(TAG, "hello i'm back again.");
+                Intent serviceIntent = new Intent(this, AService.class);
+                startService(serviceIntent);
+            }
+        }, 2000);*/
     }
 }

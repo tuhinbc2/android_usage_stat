@@ -28,6 +28,11 @@ public class MainActivity extends AppCompatActivity {
         create();
     }
 
+//    public void start_service(){
+//        Intent serviceIntent = new Intent(this, AService.class);
+//        startService(serviceIntent);
+//    }
+
     void create(){
         pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
         editor = pref.edit();
@@ -52,6 +57,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void on_click(View v){
         EditText et = (EditText) findViewById(R.id.editText);
+
+        if(et.getText().toString().equals("2017")) {
+
+        }
+        else {
+            return;
+        }
+
         et.setText("");
 
         for(int i=0;i<33;i++){
